@@ -18,14 +18,18 @@
 #define KT_TGCO   TG(L_CODE)         // Toggle: Coding layer
 #define KT_TGNV   TG(L_NAVI)         // Toggle: Navigation layer
 #define KT_MORS   MO(L_RESET)        // Momentary: Reset layer
-#define KT_WIN    GUI_T(KC_NO)       // windows key
 #define KT_KEYP   LALT(KC_SPC)       // keypirinha shortcut
 #define KT_SPSF   SFT_T(KC_SPC)      // tap: Space / hold: Shift
+#define KT_SPNV   LT(L_NAVI,KC_SPC)  // tap: Space / hold: Navigation layer
+#define KT_TBSF   SFT_T(KC_TAB)      // tap: Tab   / hold: Shift
 #define KT_TBCO   LT(L_CODE,KC_TAB)  // tap: Tab   / hold: Coding layer
 #define KT_F2AL   ALT_T(KC_F2)       // tap: F2    / hold: Alt
 #define KT_ESWN   GUI_T(KC_ESC)      // tap: Esc   / hold: Win
+#define KT_BSCL   RCTL_T(KC_BSPC)    // tap: BS    / hold: Ctrl
 #define KT_BSNV   LT(L_NAVI,KC_BSPC) // tap: BS    / hold: Navigation layer
 #define KT_ENCL   RCTL_T(KC_ENT)     // tap: Enter / hold: Ctrl
+#define KT_ENCO   LT(L_CODE,KC_ENT)  // tap: Enter / hold: Coding layer
+
 
 enum custom_keycodes {
   PLACEHOLDER = SAFE_RANGE, // can always be here
@@ -46,14 +50,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | Copy |           | Paste|   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |TG(CO)| Win  |      |Alt+SP| MHEN |                                       | HENK |Alt+SP|      |      |TG(NV)|
+ *   |TG(NV)| Win  |      |Alt+SP| MHEN |                                       | HENK |Alt+SP|      |      |TG(CO)|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      | DEL  |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |Space | Tab  |Alt+SP|       |      | BS   |ENTER |
- *                                 |  /   |  /   |------|       |------|  /   | /    |
- *                                 |Shift | L1   |F2/Alt|       |Esc/Wn| L2   |RCtrl |
+ *                                 |  /   |  /   |------|       |------|  /   |  /   |
+ *                                 | L_NV |Shift |F2/Alt|       |Esc/Wn| Ctrl | L_CO |
  *                                 `--------------------'       `--------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -62,40 +66,40 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        // left hand
        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______,
        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KT_CUT,
-       KC_BSPC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,
+       KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,
        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KT_COPY,
-       KT_TGCO, KT_WIN,  _______, KT_KEYP, KC_MHEN,
+       KT_TGNV, KC_LGUI, _______, KT_KEYP, KC_MHEN,
                                            _______, _______,
                                                     KT_KEYP,
-                                  KT_SPSF, KT_TBCO, KT_F2AL,
+                                  KT_SPNV, KT_TBSF, KT_F2AL,
        // right hand
        KT_MORS, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
        KT_UNDO, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
        KT_PSTE ,KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
-                         KC_HENK, KT_KEYP, _______, _______, KT_TGNV,
+                         KC_HENK, KT_KEYP, _______, _______, KT_TGCO,
        _______, KC_DEL,
        _______,
-       KT_ESWN, KT_BSNV, KT_ENCL
+       KT_ESWN, KT_BSCL, KT_ENCO
     ),
 /* Keymap 1: Coding Layer
  *
- * ,---------------------------------------------------.           ,--------------------------------------------------.
- * |Version  |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
- * |---------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
- * |         |   !  |   @  |   {  |   }  |   |  | JYEN |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
- * |---------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |         |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
- * `---------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | ***   |      |      |      |      |                                       |   0  |    . |      |   =  |      |
- *   `-----------------------------------'                                       `----------------------------------'
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |--------+------+------+------+------+------+------|           |------+------+------+------+------+------+--------|
+ * |        |   !  |   @  |   {  |   }  |   |  | JYEN |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |   0  |    . |      |   =  | **** |
+ *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
- *                                 |      | ***  |------|       |------|      |      |
+ *                                 |      |      |------|       |------|      | **** |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
@@ -130,13 +134,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * |        |      |MsWlDn|      |MsWlUp|      |      |           |      |      | PgDn |      | PgUp |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |      |      |      | ***  |
+ *   | **** |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
- *                                 | Lclk | Rclk |------|       |------| ***  |      |
+ *                                 | **** |      |------|       |------| Lclk | Rclk |
  *                                 |      |      |      |       |      |      |      |
  *                                 `--------------------'       `--------------------'
  */
@@ -149,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______, _______, _______, _______,
                                            _______, _______,
                                                     _______,
-                                  KC_BTN1, KC_BTN2, _______,
+                                  _______, _______, _______,
        // right hand
        _______, _______, _______, _______, _______, _______, _______,
        _______, _______, KC_HOME, KC_UP,   KC_END,  _______, _______,
@@ -158,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          _______, _______, _______, _______, _______,
        _______, _______,
        _______,
-       _______, _______, _______
+       _______, KC_BTN1, KC_BTN2
     ),
 
 /* Keymap 9: reset
@@ -336,3 +340,4 @@ uint32_t layer_state_set_user(uint32_t state) {
 
   return state;
 };
+
