@@ -21,6 +21,7 @@
 #define KT_WIN    GUI_T(KC_NO)       // windows key
 #define KT_KEYP   LALT(KC_SPC)       // keypirinha shortcut
 #define KT_SPSF   SFT_T(KC_SPC)      // tap: Space / hold: Shift
+#define KT_SPCO   LT(L_CODE,KC_SPC)  // tap: Space / hold: Coding layer
 #define KT_TBCO   LT(L_CODE,KC_TAB)  // tap: Tab   / hold: Coding layer
 #define KT_TBNV   LT(L_NAVI,KC_TAB)  // tap: Tab   / hold: Navigation layer
 #define KT_F2AL   ALT_T(KC_F2)       // tap: F2    / hold: Alt
@@ -53,9 +54,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      | DEL  |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |Space | Tab  |Alt+SP|       |      | BS   |ENTER |
- *                                 |  /   |  /   |------|       |------|  /   | /    |
- *                                 |Shift | L2   |F2/Alt|       |Esc/Wn| L1   |RCtrl |
+ *                                 |Space | Tab  |Alt+SP|       |      |      |ENTER |
+ *                                 |  /   |  /   |------|       |------| BS   | /    |
+ *                                 | L2   |F2/Alt|       |Esc/Wn|      |RCtrl |
  *                                 `--------------------'       `--------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KT_TGNV, KT_WIN,  _______, KT_KEYP, KC_MHEN,
                                            _______, _______,
                                                     KT_KEYP,
-                                  KT_SPSF, KT_TBNV, KT_F2AL,
+                                  KT_SPCO, KT_TBNV, KT_F2AL,
        // right hand
        KT_MORS, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
        KT_UNDO, KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
@@ -78,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          KC_HENK, KT_KEYP, _______, _______, KT_TGCO,
        _______, KC_DEL,
        _______,
-       KT_ESWN, KT_BSCO, KT_ENCL
+       KT_ESWN, KC_BSPC, KT_ENCL
     ),
 /* Keymap 1: Coding Layer
  *
